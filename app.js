@@ -31,13 +31,11 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 
-app.get("/",(req , res) =>{
-   res.render("index", { titulo: 'mi titulo dinamico' });
-})
+//importamos la variable router de RutasWeb
+app.use('/', require ("./router/RutasWeb"));
+app.use('/mascotas', require ("./router/Mascotas"));
 
-app.get("/servicios",(req , res) =>{
-    res.render("servicios", { tituloServicios: 'mi titulo dinamico de Servicios' });
- })
+
 app.listen(port, () => {
     console.log(`Escuchando el puerto ${port} `);
 })
