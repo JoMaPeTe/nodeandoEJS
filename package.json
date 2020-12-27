@@ -4,7 +4,7 @@
   "description": "tuto node bluuweb para crear http server ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app"
   },
   "author": "José M. Pérez",
   "license": "ISC",
