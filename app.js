@@ -21,7 +21,23 @@ server.listen(puerto, () => {
 
 const express = require("express");
 const app = express();
+
+require('dotenv').config();
+
 const port = process.env.PORT || 3000;
+
+//Conexion a base de datos
+const mongoose = require('mongoose');
+
+console.log(__dirname);
+
+const uri=`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.axfbh.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
+
+mongoose.connect(uri, 
+            { useNewUrlParser: true, useUnifiedTopology: true }
+               )
+               .then(()=> console.log('Base de datos conectada'))
+               .catch(e => console.log(e));
 
 
 // Motor de plantilla
@@ -31,14 +47,11 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 
-//importamos la variable router de RutasWeb
-app.use('/', require ("./router/RutasWeb"));
-app.use('/mascotas', require ("./router/Mascotas"));
+//Rutas web
+app.use("/",require('./router/RutasWeb'))
 
+app.use("/mascotas", require('./router/Mascotas'))
 
-app.listen(port, () => {
-    console.log(`Escuchando el puerto ${port} `);
-})
 app.use((req, res, next) => {
     // res.status(404).send("Sorry cant find that!");
     res.status(404).render("404",{
@@ -46,3 +59,7 @@ app.use((req, res, next) => {
         descripcion: "pagina error"
     });
   });
+
+  app.listen(port, () => {
+    console.log(`Escuchando el puerto ${port} `);
+})
