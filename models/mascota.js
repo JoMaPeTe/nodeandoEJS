@@ -10,4 +10,3 @@ const mascotaSchema = new Schema({
 const Mascota = mongoose.model('Mascota', mascotaSchema);
 
 module.exports = Mascota;
-
